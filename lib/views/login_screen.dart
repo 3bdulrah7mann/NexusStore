@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../theme/app_theme.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -148,11 +149,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _social(Icons.g_mobiledata, 'G'),
+                    _social(FontAwesomeIcons.google, AppColors.socialGoogle),
                     const SizedBox(width: 16),
-                    _social(Icons.facebook, 'f'),
+                    _social(FontAwesomeIcons.facebookF, AppColors.socialFacebook),
                     const SizedBox(width: 16),
-                    _social(Icons.flutter_dash, '𝕏'),
+                    _social(FontAwesomeIcons.xTwitter, Colors.white),
                   ],
                 ),
                 const SizedBox(height: 32),
@@ -213,7 +214,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _social(IconData icon, String label) {
+  Widget _social(IconData icon, Color color) {
     return Container(
       width: 52,
       height: 52,
@@ -223,7 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
         border: Border.all(color: AppColors.darkCardBorder),
       ),
       child: Center(
-        child: Icon(icon, color: Colors.white, size: label == 'G' ? 30 : 22),
+        child: FaIcon(icon, color: color, size: 22),
       ),
     );
   }

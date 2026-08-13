@@ -21,6 +21,10 @@ class AppColors {
   static const Color success = Color(0xFF10B981);
   static const Color warning = Color(0xFFF59E0B);
   static const Color starRating = Color(0xFFFFB800);
+
+  // Social brand colors
+  static const Color socialGoogle = Color(0xFFDB4437);
+  static const Color socialFacebook = Color(0xFF1877F2);
 }
 
 class AppTheme {

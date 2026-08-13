@@ -217,13 +217,19 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       width: 52,
       height: 52,
-      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: AppColors.darkCard,
         borderRadius: BorderRadius.circular(50),
         border: Border.all(color: AppColors.darkCardBorder),
       ),
-      child: Image.asset(asset, fit: BoxFit.contain),
+      child: Center(
+        child: Image.asset(
+          asset,
+          width: 24,
+          height: 24,
+          fit: BoxFit.contain,
+        ),
+      ),
     );
   }
 }

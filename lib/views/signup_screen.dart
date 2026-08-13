@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../theme/app_theme.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -150,11 +149,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _social(FontAwesomeIcons.google, AppColors.socialGoogle),
+                    _social('assets/icons/google.png'),
                     const SizedBox(width: 16),
-                    _social(FontAwesomeIcons.facebookF, AppColors.socialFacebook),
+                    _social('assets/icons/facebook.png'),
                     const SizedBox(width: 16),
-                    _social(FontAwesomeIcons.xTwitter, Colors.white),
+                    _social('assets/icons/x.png'),
                   ],
                 ),
                 const SizedBox(height: 24),
@@ -214,18 +213,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget _social(IconData icon, Color color) {
+  Widget _social(String asset) {
     return Container(
       width: 52,
       height: 52,
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: AppColors.darkCard,
         borderRadius: BorderRadius.circular(50),
         border: Border.all(color: AppColors.darkCardBorder),
       ),
-      child: Center(
-        child: FaIcon(icon, color: color, size: 22),
-      ),
+      child: Image.asset(asset, fit: BoxFit.contain),
     );
   }
 }

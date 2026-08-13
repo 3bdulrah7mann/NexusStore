@@ -149,11 +149,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _social(Icons.g_mobiledata, 'G'),
+                    _social('assets/icons/google.png'),
                     const SizedBox(width: 16),
-                    _social(Icons.facebook, 'f'),
+                    _social('assets/icons/facebook.png'),
                     const SizedBox(width: 16),
-                    _social(Icons.flutter_dash, '𝕏'),
+                    _social('assets/icons/x.png'),
                   ],
                 ),
                 const SizedBox(height: 24),
@@ -213,7 +213,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget _social(IconData icon, String label) {
+  Widget _social(String asset) {
     return Container(
       width: 52,
       height: 52,
@@ -223,7 +223,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         border: Border.all(color: AppColors.darkCardBorder),
       ),
       child: Center(
-        child: Icon(icon, color: Colors.white, size: label == 'G' ? 30 : 22),
+        child: Image.asset(
+          asset,
+          width: 24,
+          height: 24,
+          fit: BoxFit.contain,
+        ),
       ),
     );
   }

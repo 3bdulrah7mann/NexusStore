@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen>
       CurvedAnimation(parent: _controller, curve: Curves.easeIn),
     );
     _controller.forward();
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(milliseconds: 2200), () {
       if (mounted) {
         Navigator.of(context).pushReplacementNamed('/login');
       }

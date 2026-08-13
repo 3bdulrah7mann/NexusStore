@@ -265,7 +265,18 @@ class _SettingsCardState extends State<_SettingsCard> {
             title: 'التنبيهات والإشعارات',
             subtitle: 'إشعارات الطلبات والعروض',
             value: _notifications,
-            onChanged: (v) => setState(() => _notifications = v),
+            onChanged: (v) {
+              setState(() => _notifications = v);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(v
+                      ? 'تم تفعيل الإشعارات بنجاح'
+                      : 'تم إيقاف الإشعارات'),
+                  backgroundColor: v ? AppColors.primary : Colors.grey[700],
+                  duration: const Duration(seconds: 2),
+                ),
+              );
+            },
           ),
           const Divider(color: AppColors.darkCardBorder, height: 1),
           _SettingRow(

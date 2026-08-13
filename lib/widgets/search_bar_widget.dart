@@ -9,17 +9,24 @@ class SearchBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bg = isDark ? AppColors.darkCard : AppColors.lightCard;
+    final border = isDark ? AppColors.darkCardBorder : AppColors.lightCardBorder;
+    final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
+    final hintColor = isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       decoration: BoxDecoration(
-        color: AppColors.darkCard,
+        color: bg,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.darkCardBorder),
+        border: Border.all(color: border),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.15),
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.15)
+                : Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -29,20 +36,21 @@ class SearchBarWidget extends StatelessWidget {
         onChanged: (value) {
           productProvider.setSearchQuery(value);
         },
-        style: const TextStyle(color: Colors.white, fontSize: 15),
+        style: TextStyle(color: textColor, fontSize: 15),
         decoration: InputDecoration(
           icon: const Icon(Icons.search, color: AppColors.primary),
           hintText: 'ابحث عن منتج، سماعات، ساعتك...',
-          hintStyle: const TextStyle(color: Color(0xFF64748B), fontSize: 14),
+          hintStyle: TextStyle(color: hintColor, fontSize: 14),
           border: InputBorder.none,
           suffixIcon: productProvider.searchQuery.isNotEmpty
               ? IconButton(
-                  icon: const Icon(Icons.clear, color: Colors.white70, size: 18),
+                  icon: Icon(Icons.clear,
+                      color: isDark ? Colors.white70 : Colors.grey, size: 18),
                   onPressed: () {
                     productProvider.setSearchQuery('');
                   },
                 )
-              : const Icon(Icons.tune, color: Color(0xFF64748B), size: 20),
+              : Icon(Icons.tune, color: hintColor, size: 20),
         ),
       ),
     );

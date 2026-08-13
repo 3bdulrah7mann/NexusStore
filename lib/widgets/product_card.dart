@@ -16,7 +16,46 @@ class ProductCard extends StatelessWidget {
     final wishlistProvider = Provider.of<WishlistProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     final isFav = wishlistProvider.isFavorite(product.id);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardColor = isDark ? AppColors.darkCard : AppColors.lightCard;
+    final cardBorder = isDark ? AppColors.darkCardBorder : AppColors.lightCardBorder;
+    final titleColor = isDark ? Colors.white : const Color(0xFF0F172A);
 
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.0, end: 1.0),
+      duration: const Duration(milliseconds: 450),
+      curve: Curves.easeOut,
+      builder: (context, value, _) {
+        return Opacity(
+          opacity: value,
+          child: Transform.translate(
+            offset: Offset(0, (1 - value) * 24),
+            child: _cardBody(
+              context,
+              wishlistProvider,
+              cartProvider,
+              isFav,
+              isDark,
+              cardColor,
+              cardBorder,
+              titleColor,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _cardBody(
+    BuildContext context,
+    WishlistProvider wishlistProvider,
+    CartProvider cartProvider,
+    bool isFav,
+    bool isDark,
+    Color cardColor,
+    Color cardBorder,
+    Color titleColor,
+  ) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
@@ -27,12 +66,14 @@ class ProductCard extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.darkCard,
+          color: cardColor,
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: AppColors.darkCardBorder),
+          border: Border.all(color: cardBorder),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.2),
+              color: isDark
+                  ? Colors.black.withValues(alpha: 0.2)
+                  : Colors.black.withValues(alpha: 0.06),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -54,9 +95,9 @@ class ProductCard extends StatelessWidget {
                       height: double.infinity,
                       fit: BoxFit.cover,
                       errorBuilder: (_, _, _) => Container(
-                        color: Colors.grey[800],
-                        child: const Icon(Icons.image_not_supported,
-                            color: Colors.white54),
+                        color: isDark ? Colors.grey[800] : Colors.grey[300],
+                        child: Icon(Icons.image_not_supported,
+                            color: isDark ? Colors.white54 : Colors.grey),
                       ),
                     ),
                   ),
@@ -116,8 +157,8 @@ class ProductCard extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         '${product.rating}',
-                        style: const TextStyle(
-                            color: Colors.white,
+                        style: TextStyle(
+                            color: titleColor,
                             fontSize: 12,
                             fontWeight: FontWeight.bold),
                       ),
@@ -133,8 +174,8 @@ class ProductCard extends StatelessWidget {
                     product.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: titleColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),

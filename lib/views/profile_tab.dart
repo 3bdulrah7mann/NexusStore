@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/order_provider.dart';
-import '../providers/theme_provider.dart';
 import '../theme/app_theme.dart';
 
 class ProfileTab extends StatelessWidget {
@@ -41,12 +40,12 @@ class ProfileTab extends StatelessWidget {
                     child: const Icon(Icons.person, color: Colors.white, size: 30),
                   ),
                   const SizedBox(width: 14),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'حسابي الشخصي',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -55,7 +54,7 @@ class ProfileTab extends StatelessWidget {
                       SizedBox(height: 2),
                       Text(
                         'Nexus Store Member',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Color(0xFF94A3B8),
                           fontSize: 13,
                         ),
@@ -74,9 +73,9 @@ class ProfileTab extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'طلباتي السابقة',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
@@ -86,7 +85,7 @@ class ProfileTab extends StatelessWidget {
                     Text(
                       '${orders.length} طلب',
                       style: const TextStyle(
-                        color: Color(0xFF818CF8),
+                        color: AppColors.primary,
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                       ),
@@ -99,23 +98,24 @@ class ProfileTab extends StatelessWidget {
           const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
           orders.isEmpty
-              ? const SliverToBoxAdapter(
+              ? SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 30),
                     child: Center(
                       child: Column(
                         children: [
                           Icon(Icons.receipt_long_outlined,
-                              size: 70, color: Color(0xFF475569)),
+                              size: 70, color: const Color(0xFF475569)),
                           SizedBox(height: 12),
                           Text(
                             'لا توجد طلبات سابقة بعد',
-                            style: TextStyle(color: Colors.white70, fontSize: 15),
+                            style: const TextStyle(
+                                color: Colors.white70, fontSize: 15),
                           ),
                           SizedBox(height: 4),
                           Text(
                             'ستظهر طلباتك هنا بعد إتمام الشراء.',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Color(0xFF94A3B8), fontSize: 12),
                           ),
                         ],
@@ -153,7 +153,7 @@ class ProfileTab extends StatelessWidget {
                                 Text(
                                   '\$${order.totalAmount.toStringAsFixed(2)}',
                                   style: const TextStyle(
-                                    color: AppColors.primaryGradientStart,
+                                    color: AppColors.primary,
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -216,9 +216,9 @@ class ProfileTab extends StatelessWidget {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: const Text(
+              child: Text(
                 'الإعدادات',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
@@ -251,7 +251,6 @@ class _SettingsCardState extends State<_SettingsCard> {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
@@ -267,14 +266,6 @@ class _SettingsCardState extends State<_SettingsCard> {
             subtitle: 'إشعارات الطلبات والعروض',
             value: _notifications,
             onChanged: (v) => setState(() => _notifications = v),
-          ),
-          const Divider(color: AppColors.darkCardBorder, height: 1),
-          _SettingRow(
-            icon: Icons.dark_mode_outlined,
-            title: 'الوضع الداكن',
-            subtitle: 'تفعيل المظهر الداكن للتطبيق',
-            value: themeProvider.isDark,
-            onChanged: (v) => themeProvider.setDarkMode(v),
           ),
           const Divider(color: AppColors.darkCardBorder, height: 1),
           _SettingRow(
@@ -317,8 +308,7 @@ class _SettingRow extends StatelessWidget {
               color: AppColors.primary.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(10),
             ),
-            child:
-                Icon(icon, color: AppColors.primary, size: 20),
+            child: Icon(icon, color: AppColors.primary, size: 20),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -343,7 +333,7 @@ class _SettingRow extends StatelessWidget {
           Switch(
             value: value,
             onChanged: onChanged,
-            activeThumbColor: AppColors.primary,
+            activeThumbColor: Colors.white,
           ),
         ],
       ),

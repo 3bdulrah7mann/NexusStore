@@ -15,6 +15,11 @@ class HomeTab extends StatelessWidget {
     final productProvider = Provider.of<ProductProvider>(context);
     final products = productProvider.products;
     final categories = productProvider.categories;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
+    final subTextColor = isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
+    final iconBg = isDark ? const Color(0xFF1E293B) : const Color(0xFFE2E8F0);
+    final iconBorder = isDark ? const Color(0xFF334155) : const Color(0xFFCBD5E1);
 
     return SafeArea(
       child: CustomScrollView(
@@ -29,19 +34,19 @@ class HomeTab extends StatelessWidget {
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
                         'مرحباً بك 👋',
                         style: TextStyle(
-                          color: Color(0xFF94A3B8),
+                          color: subTextColor,
                           fontSize: 13,
                         ),
                       ),
-                      SizedBox(height: 2),
+                      const SizedBox(height: 2),
                       Text(
                         'Nexus Store ⚡',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: textColor,
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         ),
@@ -51,13 +56,13 @@ class HomeTab extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1E293B),
+                      color: iconBg,
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: const Color(0xFF334155)),
+                      border: Border.all(color: iconBorder),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.notifications_outlined,
-                      color: Colors.white,
+                      color: textColor,
                       size: 20,
                     ),
                   ),
@@ -148,16 +153,16 @@ class HomeTab extends StatelessWidget {
                 children: [
                   Text(
                     'المنتجات المتاحة (${products.length})',
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: textColor,
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Text(
+                  Text(
                     'عرض الكل',
                     style: TextStyle(
-                      color: Color(0xFF818CF8),
+                      color: AppColors.primary,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                     ),
@@ -171,13 +176,15 @@ class HomeTab extends StatelessWidget {
 
           // Products Grid
           products.isEmpty
-              ? const SliverToBoxAdapter(
+              ? SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 40),
+                    padding: const EdgeInsets.symmetric(vertical: 40),
                     child: Center(
                       child: Text(
                         'عذراً، لم يتم العثور على منتجات مطابقة لـ بحثك.',
-                        style: TextStyle(color: Colors.white54),
+                        style: TextStyle(
+                          color: isDark ? Colors.white54 : const Color(0xFF64748B),
+                        ),
                       ),
                     ),
                   ),
@@ -221,6 +228,11 @@ class _PriceChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final chipBg = isDark ? AppColors.darkCard : AppColors.lightCard;
+    final chipBorder = isDark ? AppColors.darkCardBorder : AppColors.lightCardBorder;
+    final chipText = isDark ? const Color(0xFFCBD5E1) : const Color(0xFF475569);
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -228,14 +240,14 @@ class _PriceChip extends StatelessWidget {
         decoration: isSelected
             ? AppTheme.primaryGradientDecoration
             : BoxDecoration(
-                color: AppColors.darkCard,
+                color: chipBg,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.darkCardBorder),
+                border: Border.all(color: chipBorder),
               ),
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? Colors.white : const Color(0xFFCBD5E1),
+            color: isSelected ? Colors.white : chipText,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
             fontSize: 12,
           ),

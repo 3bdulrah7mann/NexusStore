@@ -28,6 +28,12 @@ class CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final chipColor = isDark ? AppColors.darkCard : AppColors.lightCard;
+    final chipBorder = isDark ? AppColors.darkCardBorder : AppColors.lightCardBorder;
+    final unselColor = isDark ? const Color(0xFF94A3B8) : const Color(0xFF475569);
+    final unselText = isDark ? const Color(0xFFCBD5E1) : const Color(0xFF475569);
+
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -37,22 +43,22 @@ class CategoryChip extends StatelessWidget {
         decoration: isSelected
             ? AppTheme.primaryGradientDecoration
             : BoxDecoration(
-                color: AppColors.darkCard,
+                color: chipColor,
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: AppColors.darkCardBorder),
+                border: Border.all(color: chipBorder),
               ),
         child: Row(
           children: [
             Icon(
               _getCategoryIcon(title),
               size: 18,
-              color: isSelected ? Colors.white : const Color(0xFF94A3B8),
+              color: isSelected ? Colors.white : unselColor,
             ),
             const SizedBox(width: 8),
             Text(
               title == 'All' ? 'الكل' : title,
               style: TextStyle(
-                color: isSelected ? Colors.white : const Color(0xFFCBD5E1),
+                color: isSelected ? Colors.white : unselText,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 fontSize: 13,
               ),

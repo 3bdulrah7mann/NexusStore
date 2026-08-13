@@ -4,9 +4,11 @@ import 'providers/cart_provider.dart';
 import 'providers/product_provider.dart';
 import 'providers/wishlist_provider.dart';
 import 'providers/order_provider.dart';
-import 'providers/theme_provider.dart';
 import 'theme/app_theme.dart';
 import 'views/main_screen.dart';
+import 'views/splash_screen.dart';
+import 'views/login_screen.dart';
+import 'views/signup_screen.dart';
 
 void main() {
   runApp(const NexusStoreApp());
@@ -23,21 +25,26 @@ class NexusStoreApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CartProvider()),
         ChangeNotifierProvider(create: (_) => WishlistProvider()),
         ChangeNotifierProvider(create: (_) => OrderProvider()),
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, _) {
-          return MaterialApp(
-            title: 'Nexus Store E-Commerce',
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
-            themeMode: themeProvider.themeMode,
-            home: const Directionality(
-              textDirection: TextDirection.rtl,
-              child: MainScreen(),
-            ),
-          );
+      child: MaterialApp(
+        title: 'Nexus Store E-Commerce',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.darkTheme,
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const SplashScreen(),
+          '/login': (context) => const Directionality(
+                textDirection: TextDirection.rtl,
+                child: LoginScreen(),
+              ),
+          '/signup': (context) => const Directionality(
+                textDirection: TextDirection.rtl,
+                child: SignUpScreen(),
+              ),
+          '/main': (context) => const Directionality(
+                textDirection: TextDirection.rtl,
+                child: MainScreen(),
+              ),
         },
       ),
     );

@@ -74,11 +74,16 @@ class WishlistTab extends StatelessWidget {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: Image.network(
-                            product.imageUrl,
+                          child: Image.asset(
+                            product.assetPath,
                             width: 80,
                             height: 80,
                             fit: BoxFit.cover,
+                            errorBuilder: (_, _, _) => Container(
+                              color: Colors.grey[800],
+                              child: const Icon(Icons.image_not_supported,
+                                  color: Colors.white54),
+                            ),
                           ),
                         ),
                         const SizedBox(width: 14),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/product_provider.dart';
+import '../theme/app_theme.dart';
 import '../widgets/banner_carousel.dart';
 import '../widgets/category_chip.dart';
 import '../widgets/product_card.dart';
@@ -93,7 +94,52 @@ class HomeTab extends StatelessWidget {
 
           const SliverToBoxAdapter(child: SizedBox(height: 16)),
 
-          // Products Title Header
+          // Price Sort & Filter Row
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  _PriceChip(
+                    label: 'السعر ↑',
+                    isSelected: productProvider.priceSort == 'asc',
+                    onTap: () => productProvider
+                        .setPriceSort(productProvider.priceSort == 'asc' ? '' : 'asc'),
+                  ),
+                  const SizedBox(width: 8),
+                  _PriceChip(
+                    label: 'السعر ↓',
+                    isSelected: productProvider.priceSort == 'desc',
+                    onTap: () => productProvider.setPriceSort(
+                        productProvider.priceSort == 'desc' ? '' : 'desc'),
+                  ),
+                  const SizedBox(width: 8),
+                  _PriceChip(
+                    label: '< \$100',
+                    isSelected: productProvider.maxPrice == 100,
+                    onTap: () => productProvider
+                        .setMaxPrice(productProvider.maxPrice == 100 ? null : 100),
+                  ),
+                  const SizedBox(width: 8),
+                  _PriceChip(
+                    label: '< \$200',
+                    isSelected: productProvider.maxPrice == 200,
+                    onTap: () => productProvider
+                        .setMaxPrice(productProvider.maxPrice == 200 ? null : 200),
+                  ),
+                  const SizedBox(width: 8),
+                  _PriceChip(
+                    label: '< \$300',
+                    isSelected: productProvider.maxPrice == 300,
+                    onTap: () => productProvider
+                        .setMaxPrice(productProvider.maxPrice == 300 ? null : 300),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -157,6 +203,43 @@ class HomeTab extends StatelessWidget {
 
           const SliverToBoxAdapter(child: SizedBox(height: 24)),
         ],
+      ),
+    );
+  }
+}
+
+class _PriceChip extends StatelessWidget {
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _PriceChip({
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: isSelected
+            ? AppTheme.primaryGradientDecoration
+            : BoxDecoration(
+                color: AppColors.darkCard,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.darkCardBorder),
+              ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: isSelected ? Colors.white : const Color(0xFFCBD5E1),
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            fontSize: 12,
+          ),
+        ),
       ),
     );
   }

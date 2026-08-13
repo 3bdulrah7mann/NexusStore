@@ -8,6 +8,7 @@ class Product {
   final int reviewCount;
   final String category;
   final String imageUrl;
+  final String assetPath;
   final List<String> availableColors;
   final List<String> availableSizes;
   final bool isFeatured;
@@ -22,6 +23,7 @@ class Product {
     required this.reviewCount,
     required this.category,
     required this.imageUrl,
+    required this.assetPath,
     required this.availableColors,
     required this.availableSizes,
     this.isFeatured = false,

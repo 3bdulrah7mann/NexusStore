@@ -14,6 +14,7 @@ class ProductProvider with ChangeNotifier {
       reviewCount: 328,
       category: 'Electronics',
       imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80',
+      assetPath: 'assets/products/p1.jpg',
       availableColors: ['Matte Black', 'Silver Grey', 'Midnight Blue'],
       availableSizes: ['Standard'],
       isFeatured: true,
@@ -29,6 +30,7 @@ class ProductProvider with ChangeNotifier {
       reviewCount: 215,
       category: 'Electronics',
       imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80',
+      assetPath: 'assets/products/p2.jpg',
       availableColors: ['Titanium Gray', 'Ocean Blue', 'Orange Sport'],
       availableSizes: ['45mm', '49mm'],
       isFeatured: true,
@@ -44,6 +46,7 @@ class ProductProvider with ChangeNotifier {
       reviewCount: 142,
       category: 'Fashion',
       imageUrl: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80',
+      assetPath: 'assets/products/p3.jpg',
       availableColors: ['Cognac Brown', 'Obsidian Black'],
       availableSizes: ['20L', '28L'],
       isFeatured: false,
@@ -59,6 +62,7 @@ class ProductProvider with ChangeNotifier {
       reviewCount: 98,
       category: 'Electronics',
       imageUrl: 'https://images.unsplash.com/photo-1545454675-3531b543be5d?w=600&q=80',
+      assetPath: 'assets/products/p4.jpg',
       availableColors: ['Snow White', 'Dark Graphite'],
       availableSizes: ['Compact', 'Max'],
       isFeatured: true,
@@ -74,6 +78,7 @@ class ProductProvider with ChangeNotifier {
       reviewCount: 412,
       category: 'Fashion',
       imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80',
+      assetPath: 'assets/products/p5.jpg',
       availableColors: ['Crimson Red', 'Neon Lime', 'Triple Black'],
       availableSizes: ['40', '41', '42', '43', '44'],
       isFeatured: false,
@@ -89,6 +94,7 @@ class ProductProvider with ChangeNotifier {
       reviewCount: 84,
       category: 'Gadgets',
       imageUrl: 'https://images.unsplash.com/photo-1534073828943-f801091bb18c?w=600&q=80',
+      assetPath: 'assets/products/p6.jpg',
       availableColors: ['Brushed Aluminum', 'Matte Black'],
       availableSizes: ['Standard'],
       isFeatured: false,
@@ -97,17 +103,27 @@ class ProductProvider with ChangeNotifier {
 
   String _selectedCategory = 'All';
   String _searchQuery = '';
+  double? _maxPrice;
+  String _priceSort = ''; // '', 'asc', 'desc'
 
   List<Product> get products {
-    return _products.where((prod) {
+    var list = _products.where((prod) {
       final matchesCategory =
           _selectedCategory == 'All' || prod.category == _selectedCategory;
       final matchesSearch = prod.title
               .toLowerCase()
               .contains(_searchQuery.toLowerCase()) ||
           prod.description.toLowerCase().contains(_searchQuery.toLowerCase());
-      return matchesCategory && matchesSearch;
+      final matchesPrice = _maxPrice == null || prod.price <= _maxPrice!;
+      return matchesCategory && matchesSearch && matchesPrice;
     }).toList();
+
+    if (_priceSort == 'asc') {
+      list.sort((a, b) => a.price.compareTo(b.price));
+    } else if (_priceSort == 'desc') {
+      list.sort((a, b) => b.price.compareTo(a.price));
+    }
+    return list;
   }
 
   List<Product> get featuredProducts =>
@@ -131,5 +147,18 @@ class ProductProvider with ChangeNotifier {
 
   Product findById(String id) {
     return _products.firstWhere((prod) => prod.id == id);
+  }
+
+  double? get maxPrice => _maxPrice;
+  String get priceSort => _priceSort;
+
+  void setMaxPrice(double? value) {
+    _maxPrice = value;
+    notifyListeners();
+  }
+
+  void setPriceSort(String value) {
+    _priceSort = value;
+    notifyListeners();
   }
 }

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
 import '../providers/wishlist_provider.dart';
+import '../providers/order_provider.dart';
 import '../theme/app_theme.dart';
 import 'cart_tab.dart';
 import 'home_tab.dart';
 import 'wishlist_tab.dart';
+import 'profile_tab.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -21,26 +23,32 @@ class _MainScreenState extends State<MainScreen> {
     const HomeTab(),
     const WishlistTab(),
     const CartTab(),
+    const ProfileTab(),
   ];
 
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartProvider>(context);
     final wishlist = Provider.of<WishlistProvider>(context);
+    final orders = Provider.of<OrderProvider>(context);
 
     return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: IndexedStack(
         index: _currentIndex,
         children: _tabs,
       ),
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           border: Border(
-            top: BorderSide(color: AppColors.darkCardBorder, width: 1),
+            top: BorderSide(
+              color: Theme.of(context).dividerColor,
+              width: 1,
+            ),
           ),
         ),
         child: BottomNavigationBar(
+          backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
           currentIndex: _currentIndex,
           onTap: (index) {
             setState(() {
@@ -82,6 +90,21 @@ class _MainScreenState extends State<MainScreen> {
                 child: const Icon(Icons.shopping_cart_rounded),
               ),
               label: 'السلة',
+            ),
+            BottomNavigationBarItem(
+              icon: Badge(
+                isLabelVisible: orders.orderCount > 0,
+                label: Text('${orders.orderCount}'),
+                backgroundColor: AppColors.success,
+                child: const Icon(Icons.person_outline_rounded),
+              ),
+              activeIcon: Badge(
+                isLabelVisible: orders.orderCount > 0,
+                label: Text('${orders.orderCount}'),
+                backgroundColor: AppColors.success,
+                child: const Icon(Icons.person_rounded),
+              ),
+              label: 'حسابي',
             ),
           ],
         ),

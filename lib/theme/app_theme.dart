@@ -97,4 +97,42 @@ class AppTheme {
       ],
     );
   }
+
+  static ThemeData get lightTheme {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light,
+      scaffoldBackgroundColor: AppColors.lightBackground,
+      colorScheme: const ColorScheme.light(
+        primary: AppColors.primary,
+        secondary: AppColors.accent,
+        surface: AppColors.lightCard,
+      ),
+      cardTheme: CardThemeData(
+        color: AppColors.lightCard,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: const BorderSide(color: AppColors.lightCardBorder, width: 1),
+        ),
+      ),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.lightBackground,
+        elevation: 0,
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          color: Color(0xFF0F172A),
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: AppColors.lightCard,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: Color(0xFF64748B),
+        type: BottomNavigationBarType.fixed,
+        elevation: 10,
+      ),
+    );
+  }
 }

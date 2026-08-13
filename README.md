@@ -1,17 +1,40 @@
-# flutter_ecommerce
+# NexusStore
 
-A new Flutter project.
+A modern Flutter e-commerce application for browsing products, managing a wishlist and cart, and completing checkout.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Product catalog and product details
+- Cart and checkout flow
+- Wishlist management
+- Light and dark themes
+- State management with Provider
 
-A few resources to get you started if this is your first Flutter project:
+## Getting started
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+### Requirements
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter SDK (Dart SDK `^3.12.2`)
+
+### Run locally
+
+```bash
+flutter pub get
+flutter run
+```
+
+## Build an Android APK
+
+```bash
+flutter build apk --release
+```
+
+The generated APK is copied to `build/apk/` as `NexusStore-release.apk`.
+
+## Project structure
+
+- `lib/models` — app data models
+- `lib/providers` — application state
+- `lib/views` — screens and tabs
+- `lib/widgets` — reusable UI components
+- `assets/` — product images and app assets

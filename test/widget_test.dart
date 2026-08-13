@@ -27,6 +27,7 @@ void main() {
         reviewCount: 10,
         category: 'Electronics',
         imageUrl: 'http://example.com/img.jpg',
+        assetPath: 'assets/products/p1.jpg',
         availableColors: ['Black'],
         availableSizes: ['One Size'],
       );

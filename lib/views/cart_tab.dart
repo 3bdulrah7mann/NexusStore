@@ -83,11 +83,16 @@ class _CartTabState extends State<CartTab> {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(12),
-                              child: Image.network(
-                                item.product.imageUrl,
+                              child: Image.asset(
+                                item.product.assetPath,
                                 width: 70,
                                 height: 70,
                                 fit: BoxFit.cover,
+                                errorBuilder: (_, _, _) => Container(
+                                  color: Colors.grey[800],
+                                  child: const Icon(Icons.image_not_supported,
+                                      color: Colors.white54),
+                                ),
                               ),
                             ),
                             const SizedBox(width: 12),

@@ -60,8 +60,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(24),
-                      child: Image.network(
-                        product.imageUrl,
+                      child: Image.asset(
+                        product.assetPath,
                         fit: BoxFit.cover,
                         errorBuilder: (_, _, _) => Container(
                           color: Colors.grey[800],

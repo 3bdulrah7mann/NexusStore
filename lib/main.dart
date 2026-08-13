@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'providers/cart_provider.dart';
 import 'providers/product_provider.dart';
 import 'providers/wishlist_provider.dart';
+import 'providers/order_provider.dart';
+import 'providers/theme_provider.dart';
 import 'theme/app_theme.dart';
 import 'views/main_screen.dart';
 
@@ -20,15 +22,23 @@ class NexusStoreApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
         ChangeNotifierProvider(create: (_) => WishlistProvider()),
+        ChangeNotifierProvider(create: (_) => OrderProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
-      child: MaterialApp(
-        title: 'Nexus Store E-Commerce',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.darkTheme,
-        home: const Directionality(
-          textDirection: TextDirection.rtl,
-          child: MainScreen(),
-        ),
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, _) {
+          return MaterialApp(
+            title: 'Nexus Store E-Commerce',
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: themeProvider.themeMode,
+            home: const Directionality(
+              textDirection: TextDirection.rtl,
+              child: MainScreen(),
+            ),
+          );
+        },
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
+import '../providers/order_provider.dart';
 import '../theme/app_theme.dart';
 import 'order_success_dialog.dart';
 
@@ -174,6 +175,27 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                 ),
               ),
               onPressed: () {
+                // Record the order before clearing the cart.
+                final orderItems = cart.items.values
+                    .map((ci) => OrderItem(
+                          productTitle: ci.product.title,
+                          imageUrl: ci.product.imageUrl,
+                          price: ci.product.price,
+                          quantity: ci.quantity,
+                          selectedColor: ci.selectedColor,
+                          selectedSize: ci.selectedSize,
+                        ))
+                    .toList();
+                final address = _addressController.text.trim();
+                final paymentMethod =
+                    _paymentMethods[_selectedPaymentIndex]['name'] as String;
+                Provider.of<OrderProvider>(context, listen: false)
+                    .addOrder(
+                  items: orderItems,
+                  totalAmount: cart.totalAmount,
+                  address: address,
+                  paymentMethod: paymentMethod,
+                );
                 Navigator.of(context).pop();
                 cart.clearCart();
                 showDialog(

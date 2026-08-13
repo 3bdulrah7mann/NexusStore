@@ -34,6 +34,26 @@ android {
     }
 }
 
+// Copy the built APK to a stable, easy-to-find location after each assemble.
+// Classic API still supported in AGP 9.0.1.
+afterEvaluate {
+    android.applicationVariants.forEach { variant ->
+        variant.outputs.forEach { output ->
+            val copyTask = tasks.register(
+                "copy${variant.name.replaceFirstChar { it.uppercase() }}Apk",
+                Copy::class
+            ) {
+                from(output.outputFile)
+                into(File(rootProject.projectDir, "../build/apk"))
+                rename { "NexusStore-${variant.name}.apk" }
+            }
+            // copyTask must depend on the package task whose output it reads.
+            copyTask.configure { dependsOn(variant.packageApplicationProvider) }
+            variant.assembleProvider.configure { dependsOn(copyTask) }
+        }
+    }
+}
+
 kotlin {
     compilerOptions {
         jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
